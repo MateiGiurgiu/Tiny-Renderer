@@ -8,149 +8,186 @@ Vector3::Vector3()
 
 Vector3::Vector3(float e0, float e1, float e2)
 {
-	elements[0] = e0;
-	elements[1] = e1;
-	elements[2] = e2;
+	e[0] = e0;
+	e[1] = e1;
+	e[2] = e2;
 }
 
 Vector3::Vector3(const Vector3 & v)
 {
-	elements[0] = v.x();
-	elements[1] = v.y();
-	elements[2] = v.z();
+	e[0] = v.x();
+	e[1] = v.y();
+	e[2] = v.z();
 }
-
 
 Vector3::~Vector3()
 {
 }
 
-inline float Vector3::x() const { return elements[0]; }
-inline float Vector3::y() const { return elements[1]; }
-inline float Vector3::z() const { return elements[2]; }
-inline float Vector3::r() const { return elements[0]; }
-inline float Vector3::g() const { return elements[1]; }
-inline float Vector3::b() const { return elements[2]; }
+float Vector3::x() const { return e[0]; }
+float Vector3::y() const { return e[1]; }
+float Vector3::z() const { return e[2]; }
+float Vector3::r() const { return e[0]; }
+float Vector3::g() const { return e[1]; }
+float Vector3::b() const { return e[2]; }
 
-inline const Vector3 & Vector3::operator+() const
+void Vector3::Normalize()
+{
+	this->operator/=(Magnitude());
+}
+
+Vector3 Vector3::Normalized()
+{
+	Vector3 v = *this;
+	return v /= Magnitude();
+}
+
+float Vector3::Magnitude()
+{
+	return sqrt(e[0] * e[0] + e[1] * e[1] + e[2] * e[2]);
+}
+
+float Vector3::SqrMagnitude()
+{
+	return e[0] * e[0] + e[1] * e[1] + e[2] * e[2];
+}
+
+const Vector3 & Vector3::operator+() const
 {
 	return *this;
 }
 
-inline Vector3 Vector3::operator-() const
+Vector3 Vector3::operator-() const
 {
-	return Vector3(-elements[0], -elements[1], -elements[2]);
+	return Vector3(-e[0], -e[1], -e[2]);
 }
 
-inline float Vector3::operator[](const int i) const
+float Vector3::operator[](const int i) const
 {
-	return elements[i];
+	return e[i];
 }
 
-inline float & Vector3::operator[](const int i)
+float & Vector3::operator[](const int i)
 {
-	return elements[i];
+	return e[i];
 }
 
-inline Vector3 Vector3::operator+=(const Vector3 & v)
+Vector3 & Vector3::operator+=(const Vector3 & v)
 {
-	elements[0] += v[0];
-	elements[1] += v[1];
-	elements[2] += v[2];
+	e[0] += v[0];
+	e[1] += v[1];
+	e[2] += v[2];
 	return *this;
 }
 
-inline Vector3 & Vector3::operator-=(const Vector3 & v)
+Vector3 & Vector3::operator-=(const Vector3 & v)
 {
-	elements[0] -= v[0];
-	elements[1] -= v[1];
-	elements[2] -= v[2];
+	e[0] -= v[0];
+	e[1] -= v[1];
+	e[2] -= v[2];
 	return *this;
 }
 
-inline Vector3 & Vector3::operator*=(const Vector3 & v)
+Vector3 & Vector3::operator*=(const Vector3 & v)
 {
-	elements[0] *= v[0];
-	elements[1] *= v[1];
-	elements[2] *= v[2];
+	e[0] *= v[0];
+	e[1] *= v[1];
+	e[2] *= v[2];
 	return *this;
 }
 
-inline Vector3 & Vector3::operator/=(const Vector3 & v)
+Vector3 & Vector3::operator/=(const Vector3 & v)
 {
-	elements[0] /= v[0];
-	elements[1] /= v[1];
-	elements[2] /= v[2];
+	e[0] /= v[0];
+	e[1] /= v[1];
+	e[2] /= v[2];
 	return *this;
 }
 
-inline Vector3 & Vector3::operator*=(const float s)
+Vector3 & Vector3::operator*=(const float s)
 {
-	elements[0] *= s;
-	elements[1] *= s;
-	elements[2] *= s;
+	e[0] *= s;
+	e[1] *= s;
+	e[2] *= s;
 	return *this;
 }
 
-inline Vector3 & Vector3::operator/=(const float s)
+Vector3 & Vector3::operator/=(const float s)
 {
-	elements[0] /= s;
-	elements[1] /= s;
-	elements[2] /= s;
+	e[0] /= s;
+	e[1] /= s;
+	e[2] /= s;
 	return *this;
 }
 
-
-
-inline Vector3 operator+(const Vector3& v1, const Vector3& v2)
+Vector3 operator+(const Vector3& v1, const Vector3& v2)
 {
 	return Vector3(v1.x() + v2.x(), v1.y() + v2.y(), v1.z() + v2.z());
 }
 
-inline Vector3 operator-(const Vector3& v1, const Vector3& v2)
+Vector3 operator-(const Vector3& v1, const Vector3& v2)
 {
 	return Vector3(v1.x() - v2.x(), v1.y() - v2.y(), v1.z() - v2.z());
 }
 
-inline Vector3 operator*(const Vector3& v1, const Vector3& v2)
+Vector3 operator*(const Vector3& v1, const Vector3& v2)
 {
 	return Vector3(v1.x() * v2.x(), v1.y() * v2.y(), v1.z() * v2.z());
 }
 
-inline Vector3 operator/(const Vector3& v1, const Vector3& v2)
+Vector3 operator/(const Vector3& v1, const Vector3& v2)
 {
 	return Vector3(v1.x() / v2.x(), v1.y() / v2.y(), v1.z() / v2.z());
 }
 
-inline Vector3 operator*(const Vector3& v, float s)
+Vector3 operator*(const Vector3& v, float s)
 {
 	return Vector3(v.x() * s, v.y() * s, v.z() * s);
 }
 
-inline Vector3 operator/(const Vector3& v, float s)
+Vector3 operator/(const Vector3& v, float s)
 {
 	return Vector3(v.x() / s, v.y() / s, v.z() / s);
 }
 
-inline Vector3 operator*(float s, const Vector3& v)
+Vector3 operator*(float s, const Vector3& v)
 {
 	return Vector3(s * v.x(), s * v.y(), s * v.z());
 }
 
-inline Vector3 operator/(float s, const Vector3& v)
+Vector3 operator/(float s, const Vector3& v)
 {
 	return Vector3(s / v.x(), s / v.y(), s / v.z());
 }
 
 // input/output
-inline std::istream& operator>>(std::istream &is, Vector3 &t)
+std::istream& operator>>(std::istream &in, Vector3 &v)
 {
-	is >> t.elements[0] >> t.elements[1] >> t.elements[2];
-	return is;
+	in >> v.e[0] >> v.e[1] >> v.e[2];
+	return in;
 }
 
 std::ostream & operator<<(std::ostream & out, Vector3 v)
 {
 	out << v.x() << " " << v.y() << " " << v.z();
 	return out;
+}
+
+Vector3 Cross(const Vector3 & v1, const Vector3 & v2)
+{
+	return Vector3(
+		v1.e[1] * v2.e[2] - v1.e[2] * v2.e[1],
+		-v1.e[0] * v2.e[2] - v1.e[2] * v2.e[0],
+		v1.e[0] * v2.e[1] - v1.e[1] * v2.e[0]
+	);
+}
+
+float Dot(const Vector3 & v1, const Vector3 & v2)
+{
+	return v1.e[0] * v2.e[0] + v1.e[1] * v2.e[1] + v1.e[2] * v2.e[2];
+}
+
+Vector3 Lerp(const Vector3 & a, const Vector3 & b, const float t)
+{
+	return a * (1 - t) + b * t;
 }
