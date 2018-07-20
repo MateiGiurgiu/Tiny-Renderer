@@ -31,18 +31,18 @@ float Vector3::r() const { return e[0]; }
 float Vector3::g() const { return e[1]; }
 float Vector3::b() const { return e[2]; }
 
-void Vector3::Normalize()
-{
-	this->operator/=(Magnitude());
-}
-
 Vector3 Vector3::Normalized()
 {
 	Vector3 v = *this;
 	return v /= Magnitude();
 }
 
-float Vector3::Magnitude()
+void Vector3::Normalize()
+{
+	this->operator/=(Magnitude());
+}
+
+float Vector3::Magnitude() const
 {
 	return sqrt(e[0] * e[0] + e[1] * e[1] + e[2] * e[2]);
 }
@@ -195,4 +195,14 @@ float Dot(const Vector3 & v1, const Vector3 & v2)
 Vector3 Lerp(const Vector3 & a, const Vector3 & b, const float t)
 {
 	return a * (1 - t) + b * t;
+}
+
+Vector3 Reflect(const Vector3 & v, const Vector3 & n)
+{
+	return v - 2 * Dot(v, n) * n;
+}
+
+Vector3 Normalize(const Vector3 & v)
+{
+	return v / v.Magnitude();
 }

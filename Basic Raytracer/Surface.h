@@ -3,11 +3,14 @@
 #include "Vector3.h"
 #include "Ray.h"
 
+class Material;
+
 struct HitRecord
 {
 	float t;
 	Vector3 p;
 	Vector3 normal;
+	Material *mat_ptr;
 };
 
 class Surface

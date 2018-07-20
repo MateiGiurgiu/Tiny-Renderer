@@ -6,10 +6,11 @@ Sphere::Sphere()
 {
 }
 
-Sphere::Sphere(const Vector3 position, const float radius)
+Sphere::Sphere(const Vector3 position, const float radius, Material * material)
 {
 	this->position = position;
 	this->radius = radius;
+	this->material = material;
 }
 
 
@@ -32,6 +33,7 @@ bool Sphere::Hit(const Ray & ray, float t_min, float t_max, HitRecord & hitRecor
 			hitRecord.t = temp;
 			hitRecord.p = ray.PointAtParameter(temp);
 			hitRecord.normal = (hitRecord.p - position) / radius;
+			hitRecord.mat_ptr = this->material;
 			return true;
 		}
 		temp = (-b + sqrt(b * b - a * c)) / a;
@@ -40,6 +42,7 @@ bool Sphere::Hit(const Ray & ray, float t_min, float t_max, HitRecord & hitRecor
 			hitRecord.t = temp;
 			hitRecord.p = ray.PointAtParameter(temp);
 			hitRecord.normal = (hitRecord.p - position) / radius;
+			hitRecord.mat_ptr = this->material;
 			return true;
 		}
 	}
